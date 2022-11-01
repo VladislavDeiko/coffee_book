@@ -1,0 +1,29 @@
+.booksfilter {
+    margin-top: 30px;
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+    }
+    &__search {
+        position: relative;
+        width: 350px;
+        height: 40px;
+        
+        &-input {
+            width: 100%;
+            height: 100%;
+            border-radius:5px;
+            border: none;
+            font-size: 16px;
+            padding: 10px 10px 10px 45px;
+            background-color:white;
+            background-image: url('../../assets/icons/free-icon-search-3495620.png');
+            background-repeat: no-repeat;
+            background-position: 10px;
+            background-size: 25px;
+        }
+    }
+    
+    
+}

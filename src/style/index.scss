@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Paytone+One&family=Roboto:wght@300;400;500;700&display=swap');
+
+
+
+* {
+  /* font-family: 'Paytone One', sans-serif; */
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+    background-color:#f8e7d1;
+}
+
+ul,
+li,
+dl {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+    &:hover {
+        text-decoration: none;
+        color: inherit;
+    }
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 700px;
+    margin: 0 auto;
+}
+
+.btn {
+    width: 170px;
+    height: 40px;
+    border-radius:5px;
+    border: none;
+    background-color:#A64B00;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+}

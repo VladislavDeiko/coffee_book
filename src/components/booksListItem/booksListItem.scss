@@ -1,0 +1,14 @@
+.bookslist__items {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.bookslist__item {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 400px 1fr 1fr;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 400;
+}
