@@ -5,10 +5,17 @@
 }
 
 .bookslist__item {
-    margin-top: 10px;
     display: grid;
     grid-template-columns: 400px 1fr 1fr;
-    gap: 10px;
+    grid-template-rows: minmax(40px, auto);
+    gap: 15px;
     font-size: 18px;
     font-weight: 400;
+    word-break: break-word;
+    border-top: 1px solid black;
+    align-items: center;
+    &-status {
+        width: 30px;
+        justify-self: center;
+    }
 }

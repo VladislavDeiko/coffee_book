@@ -1,6 +1,8 @@
 .popup {
     position: relative;
-    visibility: hidden;
+    opacity: 0;
+    z-index: -1;
+    transition: all .4s;
     .popup__layout {
         position: fixed;
         width: 100vw;
@@ -9,6 +11,11 @@
         top: 0;
         left: 0;
     }
+}
+
+.popup_active {
+    opacity: 1;
+    z-index: 10;
 }
 
 .modal {
@@ -21,6 +28,13 @@
     background-color: rgba(155, 111, 30, 0.932);
     padding: 50px;
     border-radius: 5px;
+    &__close {
+        position: absolute;
+        width: 20px;
+        right: 15px;
+        top: 15px;
+        cursor: pointer;
+    }
     &__wrapper {
         display: flex;
         flex-direction: column;
@@ -61,6 +75,7 @@
                 
             }
         }
+        
         
     }
 

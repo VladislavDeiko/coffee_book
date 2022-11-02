@@ -6,9 +6,18 @@
     align-items: center;
     position: relative;
 
+    &__icon {
+        position: absolute;
+        width: 56px;
+        left: -70px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
     &__title {
+        position: relative;
         font-family: 'Paytone One', sans-serif; 
-        font-size: 40px;
+        font-size: 56px;
         text-align: center;
         color: #A64B00;
 

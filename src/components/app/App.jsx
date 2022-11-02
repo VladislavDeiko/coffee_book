@@ -1,4 +1,6 @@
-import BooksFilter from '../booksFilter/BooksFilter';
+
+
+import BooksSearch from '../booksSearch/BooksSearch';
 import BooksList from '../booksList/BooksList';
 import Header from '../header/Header';
 import NewBookModal from '../newBookModal/NewBookModal';
@@ -8,8 +10,9 @@ function App() {
   return (
     <>
       <Header/>
-      <BooksFilter/>
+      <BooksSearch />
       <BooksList/>
+
       <NewBookModal/>
     </>
   );

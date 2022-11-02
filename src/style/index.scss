@@ -60,4 +60,15 @@ p {
     font-size: 16px;
     font-weight: 500;
     color: white;
+    cursor: pointer;
+    transition: all .2s;
+    &:hover {
+        background-color:#c6722c;
+        box-shadow: 2px 2px 7px 1px rgb(140, 92, 92);
+    }
+    &_form {
+        width: 100%;
+        background-color:#3e1f06;
+        font-size: 18px;
+    }
 }

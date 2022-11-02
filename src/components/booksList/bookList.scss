@@ -1,17 +1,33 @@
 .bookslist {
     &__wrapper {
-        min-height: 400px;
-        width: 700px;
+        min-height: 300px;
+        max-width: 700px;
         background-color: #bf703077;
         border-radius: 20px;
         padding: 40px 30px;
-        margin: 20px auto 0px auto;
+        margin: 20px auto 40px auto;
     }
     &__header {
         display: grid;
         grid-template-columns: 400px 1fr 1fr;
-        gap: 10px;
+        gap: 15px;
         font-size: 20px;
         font-weight: 700;
+        &-status {
+            justify-self: center;
+        }
+        &-date {
+            justify-self: center;
+            position: relative;
+            cursor: pointer;
+            img {
+                width: 20px;
+                position: absolute;
+                left: -17px;
+                top: 3px;
+                transition: all .4s;
+            }
+        }
     }
 }
+
