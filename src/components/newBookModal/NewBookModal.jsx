@@ -1,62 +1,72 @@
 import React from 'react'
+import {useForm} from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { modalClose } from '../../store/slices/modalSlice'
+import { modalAddClose } from '../../store/slices/modalSlice'
 import { bookAdd } from '../../store/slices/booksSlice'
+import { v4 as uuidv4 } from 'uuid'
 
 import Close from '../../assets/icons/close.png'
 import './newBookModal.scss'
-import { useState } from 'react'
+
 
 function NewBookModal() {
 
-  const {activeModal} = useSelector(state => state.modal)
+  const {activeAddModal} = useSelector(state => state.modal)
   const dispatch = useDispatch();
+  const {register, handleSubmit, formState: {errors}, reset, clearErrors} = useForm({mode: 'onChange'})
 
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [status, setStatus] = useState("Хочу прочитать")
-  const [date, setDate] = useState('')
+  const onSubmit = (data) => {
+    const id = uuidv4();
+    const newBook = {id, ...data}
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const newBook = {
-      title,
-      author,
-      status,
-      date
-    }
-
+    dispatch(modalAddClose())
     dispatch(bookAdd(newBook))
-    dispatch(modalClose())
 
-    setTitle('')
-    setAuthor('')
-    setStatus("Хочу прочитать")
-    setDate('')
-
+    reset();
+    clearErrors()
   }
 
-  const activeModalClass = activeModal ? 'popup popup_active' : 'popup';
+  const validationError = (errorsField, type, msg) => {
+    if (type) {
+      return (
+        <>
+          {errorsField && <div role='alert' className='error-field'>{errorsField?.message}</div>}
+          {errorsField && errorsField?.type === type && <div role='alert' className='error-field'>{msg}</div>}
+        </>
+      )
+    } 
+    return (
+      <>
+        {errorsField && <div role='alert' className='error-field'>{errorsField?.message}</div>}
+      </>
+      
+    )
+  }
+
+  const activeModalClass = activeAddModal ? 'popup popup_active' : 'popup';
 
   return (
     <div className={activeModalClass}>
-      <div onClick={()=>dispatch(modalClose())} className="popup__layout"></div>
+      <div onClick={()=>dispatch(modalAddClose())} className="popup__layout"></div>
       <div className="modal">
-        <img onClick={()=>dispatch(modalClose())} src={Close} alt="close-modal-icon" className="modal__close" />
+        <img onClick={()=>dispatch(modalAddClose())} src={Close} alt="close-modal-icon" className="modal__close" />
         <div className="modal__wrapper">
           <div className="modal__title">Добавить новую книгу в список</div>
-          <form onSubmit={handleSubmit} className="modal__form">
+          <form onSubmit={handleSubmit(onSubmit)} className="modal__form">
             <div className="modal__form-item">
-              <input value={title} onChange={(e)=> setTitle(e.target.value)} name="book" type="text" />
-              <label htmlFor="book">Название книги</label>
+              <input {...register("title" , {required: 'Введите название книги', minLength:2})}  
+                     name="title" type="text" />
+              <label htmlFor="title">Название книги</label>
+              {validationError(errors.title, 'minLength', 'Минимум 2 символа')}
             </div>
             <div className="modal__form-item">
-              <input value={author} onChange={(e)=> setAuthor(e.target.value)} name="author" type="text" />
+              <input {...register('author', {required: "Введите автора", minLength:2})} 
+                      name="author" type="text"/>
               <label htmlFor="author">Автор</label>
+              {validationError(errors.author, 'minLength', 'Минимум 2 символа')}
             </div>
             <div className="modal__form-item">
-              <select value={status} onChange={(e)=> setStatus(e.target.value)} name="status" id="status">
+              <select  {...register('status')} name="status" id="status">
                 <option value="Хочу прочитать">Хочу прочитать</option>
                 <option value="Читаю">Читаю</option>
                 <option value="Прочитанно">Прочитанно</option>
@@ -64,8 +74,10 @@ function NewBookModal() {
               <label htmlFor="status">Статус</label>
             </div>
             <div className="modal__form-item">
-              <input value={date} onChange={(e)=> setDate(e.target.value)} className="modal__form-data" type="date" />
+              <input {...register('date', { required: "Дата не выбрана"})} 
+                       type="date" />
               <label htmlFor="date">Дата</label>
+              {validationError(errors.date, null, 'Минимум 2 символа')}
             </div>
             <button type='submit' className="btn btn_form">Добавить</button>
           </form>

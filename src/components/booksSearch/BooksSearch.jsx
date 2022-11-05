@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { modalOpen } from '../../store/slices/modalSlice'
+import { modalAddOpen } from '../../store/slices/modalSlice'
 import { bookSearch } from '../../store/slices/booksSlice'
 
 import './booksSearch.scss'
@@ -23,7 +23,7 @@ function BooksFilter() {
         <div className="container">
             <div className="booksfilter__wrapper">
                 <div>
-                    <button onClick={()=>dispatch(modalOpen())} className="btn booksfilter__btn">+ Добавить книгу</button>
+                    <button onClick={()=>dispatch(modalAddOpen())} className="btn booksfilter__btn">+ Добавить книгу</button>
                 </div>
                 <div className="booksfilter__search">
                     <input  value={search} 

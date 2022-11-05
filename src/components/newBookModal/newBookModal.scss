@@ -24,7 +24,7 @@
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
     width: 500px;
-    height: 500px;
+    min-height: 500px;
     background-color: rgba(155, 111, 30, 0.932);
     padding: 50px;
     border-radius: 5px;
@@ -79,5 +79,17 @@
         
     }
 
+
+}
+
+.error-field {
+    color: rgb(212, 0, 0);
+    font-weight: 500;
+    margin-top: 3px;
+    font-size: 14px;
+}
+
+.error-input {
+    border: 1px solid red !important;
 
 }

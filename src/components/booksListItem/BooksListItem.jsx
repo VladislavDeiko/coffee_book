@@ -38,7 +38,7 @@ function BooksListItem({title, book}) {
     dispatch(bookRemove(id))
   }
 
-  const editBook = () => {
+  const editBook = (id) => {
     
   }
 
@@ -46,7 +46,7 @@ function BooksListItem({title, book}) {
   const renderInfo = info ? <div className="bookskist__item-info">
                               <div className="bookskist__item-author">Автор: {author}</div>
                               <div className=''>
-                                <img onClick={() => editBook()} src={edit} alt="edit" />
+                                <img onClick={() => editBook(id)} src={edit} alt="edit" />
                                 <img onClick={() => deleteBook(id)} src={trash} alt="trash" />
                               </div>
                             </div> : 

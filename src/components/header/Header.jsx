@@ -1,9 +1,14 @@
 import React from 'react';
+import { useState } from 'react';
 import iconBeans from '../../assets/icons/coffee-beans.png'
 
 import './header.scss'
 
 function Header() {
+
+  const [activeHambureger, setActiveHamburger] = useState(false)
+
+
   return (
     <header className="header">
         <div className="header__title">
@@ -11,7 +16,8 @@ function Header() {
           <span>Coffee</span>Book
         </div>
         
-        <div className="header__hamburger">
+        <div onClick={() => setActiveHamburger(!activeHambureger)} 
+             className={`header__hamburger ${activeHambureger ? 'active' : null}`}>
             <span></span>
             <span></span>
             <span></span>
