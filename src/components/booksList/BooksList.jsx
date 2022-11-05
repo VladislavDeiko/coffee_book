@@ -1,18 +1,24 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import BooksListItem from '../booksListItem/BooksListItem'
-import { booksSortDate } from '../..//store/slices/booksSlice'
+import { booksSortDate, booksFilter } from '../..//store/slices/booksSlice'
 
 import './bookList.scss'
 import arrow from '../../assets/icons/arrow.png'
 
 function BooksList() {
-    const filterBooks = useSelector(state => state.books.filterBooks);
+    const {filterBooks} = useSelector(state => state.books);
     const dispatch = useDispatch();
 
     const [sort, setSort] = useState('');
+    const [filter, setFilter] = useState('')
+
+    useEffect(() => {
+        dispatch(booksFilter(filter))
+    },[filter])
+
 
     const handleSort = () => {
         dispatch(booksSortDate(sort))
@@ -23,6 +29,11 @@ function BooksList() {
         }
     }
 
+    const onFilter = (e) => {
+        setFilter(e.target.value)
+        setSort('')
+    }
+
     const renderBooks = (books) => {
         if (books.length === 0) {
             return (
@@ -31,8 +42,11 @@ function BooksList() {
                 </div>
             )
         } else {
-            return books.map(({title,status,date}) => {
-                return <BooksListItem key = {title} title={title} status={status} date={date}/>
+            return books.map(({title,...book}) => {
+                return <BooksListItem 
+                key = {title} 
+                title={title} 
+                book={book}/>
             })
         }
     }
@@ -40,7 +54,7 @@ function BooksList() {
     const styleArrow = sort === "down" ? {opacity: 1} : 
                        sort === "up" ? {opacity:1, transform: 'rotate(540deg)'} : {opacity: 0}
 
-    const renderList = renderBooks(filterBooks)
+    const renderListBooks = renderBooks(filterBooks)
 
     return (
     <section className="bookslist">
@@ -48,16 +62,28 @@ function BooksList() {
             <div className="bookslist__wrapper">
                 <div className="bookslist__header">
                     <div className="bookslist__header-name">Название книги</div>
-                    <div className="bookslist__header-status">Статус</div>
+                    <div className="bookslist__header-status">
+                        <div>
+                            <select vlaue = {filter} 
+                                    onChange={onFilter}  
+                                    className="btn btn_filter" name="filter" id="filter">
+                                <option value="">Все</option>
+                                <option value="Хочу прочитать">Хочу прочитать</option>
+                                <option value="Читаю">Читаю</option>
+                                <option value="Прочитанно">Прочитанно</option>
+                            </select>
+                        </div>
+                    </div>
                     <div onClick={handleSort} className="bookslist__header-date">
                         <img 
+                        className='bookslist__header-icon'
                         style={styleArrow}
                         src={arrow} alt="arrow" />
                         Дата
                     </div>
                 </div>
                 <div className="bookslist__items">
-                    {renderList}
+                    {renderListBooks}
                 </div>
             </div>
         </div>

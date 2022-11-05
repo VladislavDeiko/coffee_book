@@ -13,4 +13,18 @@ export const booksData = [
         status: "Читаю",
         date: "2022-10-08"
     },
+    {   
+        id: 3,
+        title: "My Friend",
+        author: "Pablo huares",
+        status: "Хочу прочитать",
+        date: "2022-08-08"
+    },
+    {
+        id:4,
+        title: "In The End",
+        author: "Unknown",
+        status: "Прочитанно",
+        date: "2022-10-08"
+    }
 ]

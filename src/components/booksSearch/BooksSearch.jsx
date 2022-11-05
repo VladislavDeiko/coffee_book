@@ -22,7 +22,9 @@ function BooksFilter() {
     <section className="booksfilter">
         <div className="container">
             <div className="booksfilter__wrapper">
-                <button onClick={()=>dispatch(modalOpen())} className="btn booksfilter__btn">+ Добавить книгу</button>
+                <div>
+                    <button onClick={()=>dispatch(modalOpen())} className="btn booksfilter__btn">+ Добавить книгу</button>
+                </div>
                 <div className="booksfilter__search">
                     <input  value={search} 
                             onChange={(e) => setSearch(e.target.value)} 
