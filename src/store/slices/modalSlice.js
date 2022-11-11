@@ -2,18 +2,23 @@ import { createSlice } from "@reduxjs/toolkit"
 
 
 const initialState = {
-    activeAddModal: false
+    activeAddModal: false,
+    modalOption: 'addBook'
 }
 
 const modalSlice = createSlice({
     name: 'modal',
     initialState,
     reducers: {
-        modalAddOpen: (state) => {
+        modalOpen: (state) => {
             state.activeAddModal = true;
         },
-        modalAddClose: (state) => {
+        modalClose: (state) => {
             state.activeAddModal = false;
+        },
+        modalOptionChange: (state, action) => {
+            // options: addBook or editBook 
+            state.modalOption = action.payload
         }
     }
 })
@@ -23,6 +28,7 @@ const {actions, reducer} = modalSlice;
 export default reducer
 
 export const {
-    modalAddOpen,
-    modalAddClose
+    modalOpen,
+    modalClose,
+    modalOptionChange
 } = actions

@@ -1,9 +1,11 @@
 import React from 'react'
 import {useForm} from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { modalAddClose } from '../../store/slices/modalSlice'
+
+import { modalClose , modalOptionChange} from '../../store/slices/modalSlice'
 import { bookAdd } from '../../store/slices/booksSlice'
 import { v4 as uuidv4 } from 'uuid'
+import toast from 'react-hot-toast';
 
 import Close from '../../assets/icons/close.png'
 import './newBookModal.scss'
@@ -11,19 +13,29 @@ import './newBookModal.scss'
 
 function NewBookModal() {
 
-  const {activeAddModal} = useSelector(state => state.modal)
+  const {activeAddModal, modalOption} = useSelector(state => state.modal)
   const dispatch = useDispatch();
   const {register, handleSubmit, formState: {errors}, reset, clearErrors} = useForm({mode: 'onChange'})
+
+  const handleCloseModal = () => {
+    dispatch(modalClose())
+    setTimeout(()=>dispatch(modalOptionChange('addBook')), 300)
+  }
+
 
   const onSubmit = (data) => {
     const id = uuidv4();
     const newBook = {id, ...data}
 
-    dispatch(modalAddClose())
+    dispatch(modalClose())
     dispatch(bookAdd(newBook))
 
     reset();
-    clearErrors()
+    clearErrors();
+
+    toast.success(`Книга ${data.title} ${modalOption === 'addBook' ? 'добавлена' : 'обновленна'}`, {
+      position: 'top-center'
+    });
   }
 
   const validationError = (errorsField, type, msg) => {
@@ -47,11 +59,13 @@ function NewBookModal() {
 
   return (
     <div className={activeModalClass}>
-      <div onClick={()=>dispatch(modalAddClose())} className="popup__layout"></div>
+      <div onClick={handleCloseModal} className="popup__layout"></div>
       <div className="modal">
-        <img onClick={()=>dispatch(modalAddClose())} src={Close} alt="close-modal-icon" className="modal__close" />
+        <img onClick={handleCloseModal} src={Close} alt="close-modal-icon" className="modal__close" />
         <div className="modal__wrapper">
-          <div className="modal__title">Добавить новую книгу в список</div>
+          <div className="modal__title">
+          {modalOption === 'addBook' ? 'Добавить новую книгу в список' : 'Редактировать запись'}
+            </div>
           <form onSubmit={handleSubmit(onSubmit)} className="modal__form">
             <div className="modal__form-item">
               <input {...register("title" , {required: 'Введите название книги', minLength:2})}  
@@ -65,21 +79,26 @@ function NewBookModal() {
               <label htmlFor="author">Автор</label>
               {validationError(errors.author, 'minLength', 'Минимум 2 символа')}
             </div>
-            <div className="modal__form-item">
-              <select  {...register('status')} name="status" id="status">
-                <option value="Хочу прочитать">Хочу прочитать</option>
-                <option value="Читаю">Читаю</option>
-                <option value="Прочитанно">Прочитанно</option>
-              </select>
-              <label htmlFor="status">Статус</label>
+            <div className="modal__form-wrapper">
+              <div className="modal__form-item">
+                <select  {...register('status')} name="status" id="status">
+                  <option value="Хочу прочитать">Хочу прочитать</option>
+                  <option value="Читаю">Читаю</option>
+                  <option value="Прочитанно">Прочитанно</option>
+                </select>
+                <label htmlFor="status">Статус</label>
+              </div>
+              <div className="modal__form-item">
+                <input {...register('date', { required: "Дата не выбрана"})} 
+                        type="date" 
+                        className="modal__form-date" />
+                <label htmlFor="date">Дата</label>
+                {validationError(errors.date, null, 'Минимум 2 символа')}
+              </div>
             </div>
-            <div className="modal__form-item">
-              <input {...register('date', { required: "Дата не выбрана"})} 
-                       type="date" />
-              <label htmlFor="date">Дата</label>
-              {validationError(errors.date, null, 'Минимум 2 символа')}
-            </div>
-            <button type='submit' className="btn btn_form">Добавить</button>
+            <button type='submit' className="btn btn_form">
+            {modalOption === 'addBook' ? 'Добавить' : 'Сохранить'}
+            </button>
           </form>
         </div>
     </div>

@@ -6,14 +6,18 @@ import trash from '../../assets/icons/trash.png'
 import edit from '../../assets/icons/edit.png'
 import { useState } from 'react'
 import { bookRemove } from '../..//store/slices/booksSlice'
+import { modalOptionChange, modalOpen} from '../../store/slices/modalSlice'
 import { useDispatch } from 'react-redux'
 
-function BooksListItem({title, book}) {
+function BooksListItem(props) {
+
+  const {id,title, author, status, date} = props.book;
 
   const [info, setInfo] = useState(false)
+
   const dispatch = useDispatch()
 
-  const {id, author, status, date} = book;
+  
 
   const statusIcons = () => {
     switch (status) {
@@ -38,28 +42,34 @@ function BooksListItem({title, book}) {
     dispatch(bookRemove(id))
   }
 
-  const editBook = (id) => {
-    
+  const openEditModal = () => {
+    dispatch(modalOpen())
+    dispatch(modalOptionChange('editBook'))
   }
+
 
 
   const renderInfo = info ? <div className="bookskist__item-info">
                               <div className="bookskist__item-author">Автор: {author}</div>
                               <div className=''>
-                                <img onClick={() => editBook(id)} src={edit} alt="edit" />
+                                <img onClick={openEditModal}  src={edit} alt="edit" />
                                 <img onClick={() => deleteBook(id)} src={trash} alt="trash" />
                               </div>
                             </div> : 
                             null
 
+
   return (
       <>
-      <div onClick={handleClick} className="bookslist__item">
-        <div className="bookslist__item-name">{title}</div>
-        <img src={iconStatus} alt="icons" className="bookslist__item-status"/>
-        <div className="bookslist__item-data">{date}</div>
-      </div>
+        <div onClick={handleClick} className="bookslist__item">
+          <div className="bookslist__item-name">{title}</div>
+          <img src={iconStatus} alt="icons" className="bookslist__item-status"/>
+          <div className="bookslist__item-data">{date}</div>
+        </div>
+
         {renderInfo}
+        
+        
       </>
   )
 }

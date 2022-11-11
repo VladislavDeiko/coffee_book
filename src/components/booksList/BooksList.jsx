@@ -42,10 +42,9 @@ function BooksList() {
                 </div>
             )
         } else {
-            return books.map(({title,...book}) => {
+            return books.map((book) => {
                 return <BooksListItem 
-                key = {title} 
-                title={title} 
+                key = {book.id} 
                 book={book}/>
             })
         }
@@ -87,6 +86,7 @@ function BooksList() {
                 </div>
             </div>
         </div>
+
     </section>
     )
 }

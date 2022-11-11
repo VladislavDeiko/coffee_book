@@ -16,7 +16,7 @@ const booksSlice = createSlice({
     reducers: {
         bookAdd: (state, action) => {
             state.books = [...state.books, action.payload]
-            state.filterBooks.push(action.payload)
+            state.filterBooks = [...state.filterBooks, action.payload]
             
         },
         bookRemove: (state,action) => {
@@ -67,7 +67,6 @@ const booksSlice = createSlice({
                     return book.status === action.payload
                 })
         }
-
     }
 })
 
